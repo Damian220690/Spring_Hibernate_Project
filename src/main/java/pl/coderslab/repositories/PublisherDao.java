@@ -1,4 +1,4 @@
-package pl.coderslab.controllers;
+package pl.coderslab.repositories;
 
 import org.springframework.stereotype.Repository;
 import pl.coderslab.entities.Publisher;

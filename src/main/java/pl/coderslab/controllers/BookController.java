@@ -2,8 +2,12 @@ package pl.coderslab.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.entities.Book;
+import pl.coderslab.entities.Publisher;
 import pl.coderslab.repositories.BookDao;
 
 @Controller
@@ -13,10 +17,12 @@ public class BookController {
     @Autowired
     BookDao bookDao;
 
-    @GetMapping("/addBook/{publisher}")
+    @GetMapping("/addBook")
     @ResponseBody
-    public String addBook(@PathVariable String publisher){
-        Book book = new Book("Hobbit", "Tolkien", 8.9,publisher,"very interesting book");
+    public String addBook(){
+        Book book = new Book("Hobbit", 8.9,"very interesting book");
+        book.setAuthor("Tolkien");
+        book.setPublisher(new Publisher("ABC"));
         bookDao.saveBook(book);
         return "The book has been added!!!";
     }
@@ -25,7 +31,7 @@ public class BookController {
     @ResponseBody
     public String editBook(@PathVariable long id){
         Book editedBook = bookDao.findBookById(id);
-        editedBook.setPublisher("Greg");
+        editedBook.setPublisher(new Publisher("Greg"));
         editedBook.setDescription("fantastic story");
         editedBook.setRating(9.6);
         bookDao.updateBook(editedBook);

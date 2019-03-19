@@ -14,11 +14,11 @@ public class BookDao {
     private EntityManager entityManager;
 
     public void saveBook(Book book){
-        entityManager.persist(book);
+        entityManager.merge(book);
     }
 
-    public void updateBook(Book book){
-        entityManager.merge(book);
+    public Book updateBook(Book book){
+        return entityManager.merge(book);
     }
 
     public Book findBookById(long id){

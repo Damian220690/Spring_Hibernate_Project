@@ -1,10 +1,9 @@
 package pl.coderslab.entities;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
-@Table(name="books")
+@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,17 +11,16 @@ public class Book {
     private String title;
     private String author;
     private double rating;
-    private String publisher;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Publisher publisher;
     private String description;
 
     public Book() {
     }
 
-    public Book(String title, String author, double rating, String publisher, String description) {
+    public Book(String title, double rating, String description) {
         this.title = title;
-        this.author = author;
         this.rating = rating;
-        this.publisher = publisher;
         this.description = description;
     }
 
@@ -58,11 +56,11 @@ public class Book {
         this.rating = rating;
     }
 
-    public String getPublisher() {
+    public Publisher getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
 
@@ -81,7 +79,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", rating=" + rating +
-                ", publisher='" + publisher + '\'' +
+                ", publisher=" + publisher +
                 ", description='" + description + '\'' +
                 '}';
     }

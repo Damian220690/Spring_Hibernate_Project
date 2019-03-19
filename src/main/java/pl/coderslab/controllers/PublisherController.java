@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.entities.Publisher;
+import pl.coderslab.repositories.PublisherDao;
 
 @Controller
 @RequestMapping(value = "/publishers", produces = "text/plain;charset=UTF-8")
