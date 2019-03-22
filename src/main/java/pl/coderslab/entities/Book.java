@@ -1,6 +1,8 @@
 package pl.coderslab.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -9,7 +11,8 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
-    private String author;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Author> authors = new ArrayList<>();
     private double rating;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Publisher publisher;
@@ -40,14 +43,6 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public double getRating() {
         return rating;
     }
@@ -72,12 +67,21 @@ public class Book {
         this.description = description;
     }
 
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
+                ", authors=" + authors +
                 ", rating=" + rating +
                 ", publisher=" + publisher +
                 ", description='" + description + '\'' +

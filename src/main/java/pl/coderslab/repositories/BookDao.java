@@ -5,7 +5,9 @@ import pl.coderslab.entities.Book;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -14,7 +16,7 @@ public class BookDao {
     private EntityManager entityManager;
 
     public void saveBook(Book book){
-        entityManager.merge(book);
+        entityManager.persist(book);
     }
 
     public Book updateBook(Book book){
@@ -28,5 +30,11 @@ public class BookDao {
     public void deleteBook(long id){
         Book book = entityManager.find(Book.class, id);
         entityManager.remove(entityManager.contains(book) ? book : entityManager.merge(book));
+    }
+
+    public List<Book> getAllBooks(){
+        Query query = entityManager.createQuery("SELECT b FROM Book b");
+        List resultList = query.getResultList();
+        return resultList;
     }
 }
